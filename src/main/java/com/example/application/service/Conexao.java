@@ -10,7 +10,7 @@ public class Conexao {
         Connection conexao = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/BancoFinanceiro", "root", "1234567");
+            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/BancoFinanceiro", "root", "root");
             ResultSet rsBanco = conexao.createStatement().executeQuery("SELECT * FROM gastos");
             while (rsBanco.next()) {
                 System.out.println(rsBanco.getString("tipo"));

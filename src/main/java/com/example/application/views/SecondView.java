@@ -36,7 +36,7 @@ public class SecondView extends VerticalLayout {
     }
 
 
-    private void updateGrid(LocalDate startDate, LocalDate endDate) {
+    protected void updateGrid(LocalDate startDate, LocalDate endDate) {
         List<Gasto> allGastos = gastoRepository.getAll();
         if (startDate != null && endDate != null) {
             allGastos = allGastos.stream()

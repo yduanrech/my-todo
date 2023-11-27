@@ -17,7 +17,7 @@ public class GanhoRepository {
             conexao = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/BancoFinanceiro",
                     "root",
-                    "@Ruth12345"
+                    "root"
             );
             System.out.println("Conexão ao banco de dados estabelecida");
         } catch (SQLException e) {
@@ -50,7 +50,7 @@ public class GanhoRepository {
 
 
     public void add(Ganho ganhos) {
-        System.out.println("Se imprimiu é porque chamou o método add");
+        //System.out.println("Se imprimiu é porque chamou o método add");
         String sql = "INSERT INTO ganhos (id, tipo, data, valor) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setInt(1, ganhos.getId());

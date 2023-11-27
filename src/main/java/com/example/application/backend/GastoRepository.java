@@ -17,7 +17,7 @@ public class GastoRepository {
             conexao = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/BancoFinanceiro",
                     "root",
-                    "@Ruth12345"
+                    "root"
             );
             System.out.println("Conexão ao banco de dados estabelecida");
         } catch (SQLException e) {
@@ -51,6 +51,7 @@ public class GastoRepository {
 
 
     public void add(Gasto gasto) {
+
         System.out.println("Se imprimiu é porque chamou o método add");
         String sql = "INSERT INTO gastos (tipo, data, valor, formaPagamento) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
@@ -62,7 +63,10 @@ public class GastoRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
+
+
 
     public void delete(Gasto gasto) {
         String sql = "DELETE FROM gastos WHERE id = ?";

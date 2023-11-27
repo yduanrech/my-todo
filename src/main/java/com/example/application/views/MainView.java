@@ -2,6 +2,7 @@ package com.example.application.views;
 import com.example.application.backend.Financeiro;
 import com.example.application.backend.GastoRepository;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
 import com.example.application.backend.Gasto;
@@ -11,8 +12,13 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.grid.Grid;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Route("")
 public class MainView extends VerticalLayout {
@@ -28,6 +34,8 @@ public class MainView extends VerticalLayout {
         add(ViewUtils.criarBotaoTopo());
         setupAddGastoSection();
 
+
+
         grid.addComponentColumn(gasto -> {
             Button deleteButton = new Button("Deletar", clickEvent -> {
                 gastoRepository.delete(gasto);
@@ -42,11 +50,24 @@ public class MainView extends VerticalLayout {
         updateGrid();
     }
 
-    private void setupAddGastoSection() {
+    protected void setupAddGastoSection() {
         NumberField idGastoField = new NumberField("ID do Gasto");
-        Select<String> tipoGastoSelect = new Select<>();
-        tipoGastoSelect.setItems("Habitação", "Alimentação", "Transporte", "Lazer", "Outros");
-        tipoGastoSelect.setLabel("Tipo de Gasto");
+        List<String> tiposDeGasto = new ArrayList<>();
+        tiposDeGasto.addAll(Arrays.asList("Habitação", "Alimentação", "Transporte", "Lazer", "Outros"));
+
+        ComboBox<String> tipoGastoComboBox = new ComboBox<>();
+        tipoGastoComboBox.setItems(tiposDeGasto);
+        tipoGastoComboBox.setLabel("Tipo de Gasto");
+        tipoGastoComboBox.setAllowCustomValue(true);
+
+        tipoGastoComboBox.addCustomValueSetListener(event -> {
+            String novoTipo = event.getDetail();
+            if (!tiposDeGasto.contains(novoTipo)) {
+                tiposDeGasto.add(novoTipo);
+                tipoGastoComboBox.setItems(tiposDeGasto);
+            }
+            tipoGastoComboBox.setValue(novoTipo);
+        });
 
         DatePicker dataGastoPicker = new DatePicker("Data do Gasto");
         NumberField valorGastoField = new NumberField("Valor do Gasto");
@@ -60,7 +81,7 @@ public class MainView extends VerticalLayout {
             System.out.println("Antes do add gasto");
             Gasto gasto = new Gasto(
                     0,
-                    tipoGastoSelect.getValue(),
+                    tipoGastoComboBox.getValue(),
                     dataGastoPicker.getValue(),
                     valorGastoField.getValue(),
                     formaPagamentoSelect.getValue());
@@ -69,7 +90,8 @@ public class MainView extends VerticalLayout {
             updateGrid();
         });
 
-        add(tipoGastoSelect, dataGastoPicker, valorGastoField, formaPagamentoSelect, addGastoButton);
+
+        add(tipoGastoComboBox, dataGastoPicker, valorGastoField, formaPagamentoSelect, addGastoButton);
     }
 
     //Add a button called Relatorio and another button called Ganho to the main view side by side

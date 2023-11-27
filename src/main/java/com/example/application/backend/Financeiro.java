@@ -1,6 +1,4 @@
 package com.example.application.backend;
-import com.example.application.backend.Ganho;
-import com.example.application.backend.Gasto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,23 @@ public class Financeiro {
         ganhos.add(ganho);
     }
 
-//    public void relatorioGastos() {
+    public List<Gasto> getGastos() {
+        return gastos;
+    }
+
+    public void setGastos(List<Gasto> gastos) {
+        this.gastos = gastos;
+    }
+
+    public List<Ganho> getGanhos() {
+        return ganhos;
+    }
+
+    public void setGanhos(List<Ganho> ganhos) {
+        this.ganhos = ganhos;
+    }
+
+    //    public void relatorioGastos() {
 //        System.out.println("Relatório de Gastos");
 //        System.out.println("--------------------");
 //        Map<String, Double> gastosPorTipo = new HashMap<>();
